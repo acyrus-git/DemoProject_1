@@ -1,4 +1,4 @@
-package Entity;
+package org.aditya.DemoProject_1.entity;
 
 public class Product {
     public Product(String name, Double price) {
