@@ -24,7 +24,7 @@ public class PrinterTest {
         assertEquals("All products should be printed",printer.printProducts(productList1),"All products printed");
     }
 
-    @Test(expected = Exception.class)
+    @Test(expected = PrinterException.class)
     public void testPrintProductsWithEmptyList() throws Exception {
         List<Product> productList1 = new ArrayList<>();
         assertEquals("All products should be printed",printer.printProducts(productList1),"All products printed");

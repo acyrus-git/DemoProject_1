@@ -8,9 +8,9 @@ import java.util.List;
 public class Printer {
     public String printProducts(List<Product> productList) throws Exception {
         int numOfProducts=productList.size();
-        String s="";
+
         if(numOfProducts==0)
-            throw new Exception();
+            throw new PrinterException();
 
 
 

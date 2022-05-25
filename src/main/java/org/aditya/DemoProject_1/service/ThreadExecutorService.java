@@ -12,6 +12,7 @@ import java.util.concurrent.*;
 public class ThreadExecutorService {
 
     public List<Future<String>> ExecuteThread(List<Product>productList1,List<Product>productList2) throws Exception {
+
         ExecutorService executorService= Executors.newFixedThreadPool(5);
         System.out.println("<<Application Started>>");
         //created object of resource to be used by tasks
@@ -53,8 +54,10 @@ public class ThreadExecutorService {
         catch(Exception e){
             throw new Exception();
         }
+        finally {
+            executorService.shutdown();
+        }
 
-        executorService.shutdown();
 
         System.out.println("<<Application Stopped>>");
         return allFutures;
