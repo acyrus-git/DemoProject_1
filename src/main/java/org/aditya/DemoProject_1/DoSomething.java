@@ -9,17 +9,18 @@ import java.util.List;
 import java.util.concurrent.*;
 
 class Printer{
-    String printDocuments(int numOfCopies,String docName)
+    String printDocuments(List<Product> productList)
     {
-        for(int i=1;i<=numOfCopies;i++)
+        int numOfProducts=productList.size();
+        for(int i=0;i<numOfProducts;i++)
         {
-            System.out.println("Printing "+docName+" "+i);
+            System.out.println("The price of "+productList.get(i).getName()+" is "+productList.get(i).getPrice());
         }
-        return "All "+docName+" docs printed";
+        return "All products printed";
     }
 }
 //uses thread class using inheritance
-class MyThread1 extends Thread{
+/*class MyThread1 extends Thread{
     Printer pRef;
    public MyThread1(Printer p){
         pRef=p;
@@ -83,42 +84,45 @@ class MyThread5 extends Thread{
             pRef.printDocuments(10, "Kunaldocument.pdf");
         }
     }
-}
+}*/
 //uses runnable interface for multithreading
 class MyTask1 implements Runnable{
     Printer pRef;
-    String doc;
-    public MyTask1(Printer p, String s){
+    List<Product>productList;
+
+    public MyTask1(Printer p, List<Product>pList){
         pRef=p;
-        doc=s;
+        productList=pList;
     }
     public void run(){
         synchronized (pRef){
-            pRef.printDocuments(10, doc);
+            pRef.printDocuments( productList);
         }
     }
 }
 // uses callable interface for multithreading which returns some value or exception on completion of task
 class MyTask2 implements Callable<String>{
     Printer pRef;
-    String doc;
-    public MyTask2(Printer p, String s){
+    List<Product>productList;
+    public MyTask2(Printer p, List<Product>pList){
         pRef=p;
-        doc=s;
+        productList=pList;
     }
     public String call(){
 
-            return pRef.printDocuments(10, doc);
+            return pRef.printDocuments( productList);
 
     }
 
 }
 public class DoSomething {
 
-    //private List<Product>productList1= Arrays.asList(new Product("Cookie1",10.0),new Product("Cookie2",20.0),new Product("Cookie3",30.0));
-    //private List<Product>productList2= Arrays.asList(new Product("Cookie1",10.0),new Product("Cookie2",20.0),new Product("Cookie3",30.0));
+
     public static void main(String[] args){
+         List<Product>productList1= Arrays.asList(new Product("Cookie1",10.0),new Product("Cookie2",20.0),new Product("Cookie4",40.0),new Product("Cookie5",50.0));
+         List<Product>productList2= Arrays.asList(new Product("Chocolate1",10.0),new Product("Chocolate2",20.0),new Product("Chocolate3",30.0),new Product("Chocolate4",40.0),new Product("Chocolate5",50.0));
         //using executorservice to create a pool of multiple threads to handle multiple tasks
+
         ExecutorService executorService= Executors.newFixedThreadPool(5);
         System.out.println("<<Application Started>>");
         //created object of resource to be used by tasks
@@ -137,11 +141,11 @@ public class DoSomething {
 
         //created a list of callables which contains list of tasks to perform
         List<Callable<String>> callables=new ArrayList<>();
-        callables.add(new MyTask2(printer,"Nihaldoc"));
-        callables.add(new MyTask2(printer,"Kunaldoc"));
-        callables.add(new MyTask2(printer,"sahildoc"));
-        callables.add(new MyTask2(printer,"Adityadoc"));
-        callables.add(new MyTask2(printer,"Vikasdoc"));
+        callables.add(new MyTask2(printer,productList1));
+        callables.add(new MyTask2(printer,productList2));
+        //callables.add(new MyTask2(printer,"sahildoc"));
+        //callables.add(new MyTask2(printer,"Adityadoc"));
+        //callables.add(new MyTask2(printer,"Vikasdoc"));
 
 
         try {
