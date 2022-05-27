@@ -1,16 +1,20 @@
 package org.aditya.DemoProject_1.service;
 
 import org.aditya.DemoProject_1.entity.Product;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
 
 public class ExecutorCyclicBarrier {
+    Logger logger= LoggerFactory.getLogger(ExecutorCyclicBarrier.class);
     public List<Future<String>> ExecuteThread(List<Product>productList1, List<Product>productList2) throws Exception {
         CyclicBarrier cyclicBarrier=new CyclicBarrier(2);
         ExecutorService executorService= Executors.newFixedThreadPool(5);
-        System.out.println("<<Application Started>>");
+        logger.info("Application Started");
+
         //created object of resource to be used by tasks
         Printer printer=new Printer();
 
@@ -36,14 +40,16 @@ public class ExecutorCyclicBarrier {
 
         }
         catch(Exception e){
+            logger.error("Some error occured in execuotor service");
             throw new Exception();
         }
         finally {
+            logger.info("Shutting down executor service");
             executorService.shutdown();
         }
 
 
-        System.out.println("<<Application Stopped>>");
+       logger.info("Application Stopped");
         return allFutures;
     }
 }

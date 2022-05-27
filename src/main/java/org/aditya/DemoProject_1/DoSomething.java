@@ -45,7 +45,7 @@ public class DoSomething {
         ExecutorCyclicBarrier executorCyclicBarrier=new ExecutorCyclicBarrier();
 
 
-       // List<Future<String>>allFutures=threadExecutorService.ExecuteThread(productList1,productList2);
+        //List<Future<String>>allFutures=threadExecutorService.ExecuteThread(productList1,productList2);
         //List<Future<String>>allFutures=threadExecutorLatch.ExecuteThread(productList1,productList2);
         //List<Future<String>>allFutures=executorCyclicBarrier.ExecuteThread(productList1,productList2);
 

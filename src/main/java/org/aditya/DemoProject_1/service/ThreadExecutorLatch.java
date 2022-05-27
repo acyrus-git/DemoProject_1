@@ -1,16 +1,20 @@
 package org.aditya.DemoProject_1.service;
 
 import org.aditya.DemoProject_1.entity.Product;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
 
 public class ThreadExecutorLatch {
+    Logger logger= LoggerFactory.getLogger(ThreadExecutorLatch.class);
     public List<Future<String>> ExecuteThread(List<Product>productList1, List<Product>productList2) throws Exception {
         CountDownLatch latch=new CountDownLatch(2);
         ExecutorService executorService= Executors.newFixedThreadPool(5);
-        System.out.println("<<Application Started>>");
+        logger.info("Application Started");
+
         //created object of resource to be used by tasks
         Printer printer=new Printer();
         /*Thread myThread1=new Thread(new MyTask1(printer,"Nihaldoc"));
@@ -48,14 +52,15 @@ public class ThreadExecutorLatch {
             latch.await();
         }
         catch(Exception e){
+            logger.error("Error occured in executor service");
             throw new Exception();
         }
         finally {
             executorService.shutdown();
         }
 
+        logger.info("Application stopped");
 
-        System.out.println("<<Application Stopped>>");
         return allFutures;
     }
 }
