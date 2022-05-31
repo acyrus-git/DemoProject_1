@@ -13,6 +13,9 @@ public class Product {
     private String name;
     private double price;
 
+    public Product() {
+    }
+
     public Product(String name, Double price) {
         super();
         this.id=id;
